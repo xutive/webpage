@@ -129,12 +129,16 @@
             document.getElementById("myModal").style.display = "block";
             document.getElementById("modalImage").src = images[currentIndex];
             document.addEventListener('keydown', handleKeydown);
+            document.addEventListener('touchstart', handleTouchStart);
+            document.addEventListener('touchmove', handleTouchMove);
         }
 
         // Close the Modal
         function closeModal() {
             document.getElementById("myModal").style.display = "none";
             document.removeEventListener('keydown', handleKeydown);
+            document.removeEventListener('touchstart', handleTouchStart);
+            document.removeEventListener('touchmove', handleTouchMove);
             resetZoom();
         }
 
@@ -159,6 +163,41 @@
             } else if (event.key === 'ArrowRight') {
                 changeImage(1);
             }
+        }
+
+        // Touch event variables
+        let xDown = null;
+        let yDown = null;
+
+        // Handle touch start
+        function handleTouchStart(event) {
+            const firstTouch = event.touches[0];
+            xDown = firstTouch.clientX;
+            yDown = firstTouch.clientY;
+        }
+
+        // Handle touch move
+        function handleTouchMove(event) {
+            if (!xDown || !yDown) {
+                return;
+            }
+
+            const xUp = event.touches[0].clientX;
+            const yUp = event.touches[0].clientY;
+
+            const xDiff = xDown - xUp;
+            const yDiff = yDown - yUp;
+
+            if (Math.abs(xDiff) > Math.abs(yDiff)) {
+                if (xDiff > 0) {
+                    changeImage(1);
+                } else {
+                    changeImage(-1);
+                }
+            }
+
+            xDown = null;
+            yDown = null;
         }
 
         // Zoom image
@@ -195,3 +234,4 @@
     </script>
 </body>
 </html>
+
