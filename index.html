@@ -37,29 +37,27 @@
             top: 0;
             width: 100%;
             height: 100%;
-            max-width: 90vw;
-            max-height: 95vw;
             overflow: auto;
             background-color: rgba(0, 0, 0, 0.9);
         }
         .modal-content {
-            margin: 5% auto;
+            margin: auto;
             display: flex;
             align-items: center;
             justify-content: center;
-            width: 80%;
-            max-width: 90vw;
-            max-height: 95vw;
+            width: 100%;
+            height: 100%;
             position: relative;
         }
         .modal-content img {
-            width: 100%;
+            max-width: 100%;
+            max-height: 100%;
             border-radius: 10px;
         }
-        .close, .prev, .next {
+        .close {
             position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
+            top: 20px;
+            right: 35px;
             color: #fff;
             font-size: 40px;
             font-weight: bold;
@@ -67,23 +65,24 @@
             cursor: pointer;
             user-select: none;
         }
-        .close {
-            right: 35px;
-        }
-        .prev {
-            left: 20px;
-        }
-        .next {
-            right: 20px;
-        }
         .close:hover,
-        .close:focus,
-        .prev:hover,
-        .prev:focus,
-        .next:hover,
-        .next:focus {
+        .close:focus {
             color: #bbb;
             text-decoration: none;
+        }
+        .modal-left,
+        .modal-right {
+            position: absolute;
+            top: 0;
+            width: 50%;
+            height: 100%;
+            cursor: pointer;
+        }
+        .modal-left {
+            left: 0;
+        }
+        .modal-right {
+            right: 0;
         }
     </style>
 </head>
@@ -102,9 +101,9 @@
     <div id="myModal" class="modal">
         <span class="close" onclick="closeModal()">&times;</span>
         <div class="modal-content">
-            <span class="prev" onclick="changeImage(-1)">&#10094;</span>
+            <div class="modal-left" onclick="changeImage(-1)"></div>
             <img id="modalImage">
-            <span class="next" onclick="changeImage(1)">&#10095;</span>
+            <div class="modal-right" onclick="changeImage(1)"></div>
         </div>
     </div>
 
@@ -145,4 +144,3 @@
     </script>
 </body>
 </html>
-
