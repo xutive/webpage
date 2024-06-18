@@ -18,7 +18,7 @@
         .gallery img {
             margin: 10px;
             width: 85vw;
-            max-width: 1600px;
+            max-width: 1500px;
             border: 2px solid #ccc;
             border-radius: 10px;
             transition: transform 0.2s, border-color 0.2s;
@@ -37,45 +37,64 @@
             top: 0;
             width: 100%;
             height: 100%;
+            max-width: 90vw;
+            max-height: 95vw;
             overflow: auto;
             background-color: rgba(0, 0, 0, 0.9);
         }
         .modal-content {
-            margin: 15% auto;
-            display: block;
+            margin: 5% auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             width: 80%;
             max-width: 90vw;
+            max-height: 95vw;
+            position: relative;
         }
         .modal-content img {
             width: 100%;
             border-radius: 10px;
         }
-        .close {
+        .close, .prev, .next {
             position: absolute;
-            top: 20px;
-            right: 35px;
+            top: 50%;
+            transform: translateY(-50%);
             color: #fff;
             font-size: 40px;
             font-weight: bold;
             transition: 0.3s;
             cursor: pointer;
+            user-select: none;
+        }
+        .close {
+            right: 35px;
+        }
+        .prev {
+            left: 20px;
+        }
+        .next {
+            right: 20px;
         }
         .close:hover,
-        .close:focus {
+        .close:focus,
+        .prev:hover,
+        .prev:focus,
+        .next:hover,
+        .next:focus {
             color: #bbb;
             text-decoration: none;
-            cursor: pointer;
         }
     </style>
 </head>
 <body>
     <h1>Landschaftsaufnahmen von Felix Kunzelmann</h1>
     <div class="gallery">
-        <img src="images/DJI_0141klein.jpg" alt="Wellen am Meer" onclick="openModal('images/DJI_0141.JPG')">
-        <img src="images/DSC01547klein.jpg" alt="Yoga am Meer" onclick="openModal('images/DSC01547.jpg')">
-        <img src="images/DSC04835klein.jpg" alt="Morgensonne" onclick="openModal('images/DSC04835.jpg')">
-        <img src="images/DSC06049klein.jpg" alt="Eibsee am Abend" onclick="openModal('images/DSC06049.jpg')">
-        <img src="images/DSC06401klein.jpg" alt="Bergpanorama" onclick="openModal('images/DSC06401.jpg')">
+        <img src="images/DJI_0141klein.jpg" alt="Wellen am Meer" onclick="openModal(0)">
+        <img src="images/DSC01547klein.jpg" alt="Yoga am Meer" onclick="openModal(1)">
+        <img src="images/DSC04835klein.jpg" alt="Morgensonne" onclick="openModal(2)">
+        <img src="images/DSC06049klein.jpg" alt="Eibsee am Abend" onclick="openModal(3)">
+        <img src="images/DSC06401klein.jpg" alt="Bergpanorama" onclick="openModal(4)">
         <!-- Add more images as needed -->
     </div>
 
@@ -83,21 +102,47 @@
     <div id="myModal" class="modal">
         <span class="close" onclick="closeModal()">&times;</span>
         <div class="modal-content">
+            <span class="prev" onclick="changeImage(-1)">&#10094;</span>
             <img id="modalImage">
+            <span class="next" onclick="changeImage(1)">&#10095;</span>
         </div>
     </div>
 
     <script>
+        // Image array
+        const images = [
+            'images/DJI_0141.JPG',
+            'images/DSC01547.jpg',
+            'images/DSC04835.jpg',
+            'images/DSC06049.jpg',
+            'images/DSC06401.jpg'
+            // Add more images here
+        ];
+        let currentIndex = 0;
+
         // Open the Modal
-        function openModal(src) {
+        function openModal(index) {
+            currentIndex = index;
             document.getElementById("myModal").style.display = "block";
-            document.getElementById("modalImage").src = src;
+            document.getElementById("modalImage").src = images[currentIndex];
         }
 
         // Close the Modal
         function closeModal() {
             document.getElementById("myModal").style.display = "none";
         }
+
+        // Change image
+        function changeImage(direction) {
+            currentIndex += direction;
+            if (currentIndex < 0) {
+                currentIndex = images.length - 1;
+            } else if (currentIndex >= images.length) {
+                currentIndex = 0;
+            }
+            document.getElementById("modalImage").src = images[currentIndex];
+        }
     </script>
 </body>
 </html>
+
