@@ -82,11 +82,11 @@
         }
         .modal-left {
             left: 0;
-            width: 33%;
+            width: 15%;
         }
         .modal-right {
             right: 0;
-            width: 33%;
+            width: 15%;
         }
     </style>
 </head>
@@ -104,10 +104,10 @@
     <!-- The Modal -->
     <div id="myModal" class="modal">
         <span class="close" onclick="closeModal()">&times;</span>
-        <div class="modal-content">
-            <div class="modal-left" onclick="changeImage(-1)"></div>
-            <img id="modalImage" ondblclick="zoomImage(event)">
-            <div class="modal-right" onclick="changeImage(1)"></div>
+        <div class="modal-content" onclick="closeModal()">
+            <div class="modal-left" onclick="event.stopPropagation(); changeImage(-1)"></div>
+            <img id="modalImage" onclick="zoomImage(event)">
+            <div class="modal-right" onclick="event.stopPropagation(); changeImage(1)"></div>
         </div>
     </div>
 
@@ -207,9 +207,6 @@
         document.querySelector('.modal-right').addEventListener('click', function(event) {
             event.stopPropagation();
             changeImage(1);
-        });
-        document.querySelector('.modal').addEventListener('click', function(event) {
-            closeModal();
         });
     </script>
 </body>
